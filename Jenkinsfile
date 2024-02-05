@@ -5,7 +5,7 @@ pipeline {
       stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
-              archive 'target/*.jar' //so that they can be dooownloadooed later
+              archive 'target/*.jar' //so that thepy can be dooownloadooed later
             }
         }   
     }
