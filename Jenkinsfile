@@ -5,8 +5,25 @@ pipeline {
       stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
-              archive 'target/*.jar' //so that thepy caon be dooownloadooed later
+
+              archive 'target/*.jar' //so that 
             }
-        }   
+        }  
+
+stage('UNIT test & jacoco ') {
+      steps {
+        sh "mvn test"
+      }
+      post {
+        always {
+          junit 'target/surefire-reports/*.xml'
+          jacoco execPattern: 'target/jacoco.exec'
+        }
+      }
+ 
+    }
+
+
+
     }
 }
