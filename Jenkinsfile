@@ -30,7 +30,7 @@ pipeline {
    	}
  	}
 
-stage('Docker Build and Push') {
+ stage('Docker Build and Push') {
   	steps {
     	withCredentials([string(credentialsId: 'docker-hub-password', variable: 'DOCKER_HUB_PASSWORD')]) {
       	sh 'sudo docker login -u hrefnhaila -p $DOCKER_HUB_PASSWORD'
@@ -42,7 +42,7 @@ stage('Docker Build and Push') {
   	}
 	}
 
-stage('Deployment Kubernetes  ') {
+ stage('Deployment Kubernetes  ') {
   	steps {
     	withKubeConfig([credentialsId: 'kubeconfig']) {
            	sh "sed -i 's#replace#hrefnhaila/devops-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
