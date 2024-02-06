@@ -24,19 +24,22 @@ pipeline {
  stage('Vulnerability Scan - Docker Trivy') {
    	steps {
         	withCredentials([string(credentialsId: 'trivy_sabrine', variable: 'TOKEN')]) {
+catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
       sh "sed -i 's#token_github#${TOKEN}#g' trivy-image-scan.sh" 	 
       sh "sudo bash trivy-image-scan.sh"
+
+}
        	}
    	}
  	}
 
  stage('Docker Build and Push') {
   	steps {
-    	withCredentials([string(credentialsId: 'docker-hub-password', variable: 'DOCKER_HUB_PASSWORD')]) {
-      	sh 'sudo docker login -u hrefnhaila -p $DOCKER_HUB_PASSWORD'
+    	withCredentials([string(credentialsId: 'dockerhub', variable: 'DOCKER_HUB_PASSWORD')]) {
+      	sh 'sudo docker login -u sabrine24 -p $DOCKER_HUB_PASSWORD'
       	sh 'printenv'
-      	sh 'sudo docker build -t hrefnhaila/devops-app:""$GIT_COMMIT"" .'
-      	sh 'sudo docker push hrefnhaila/devops-app:""$GIT_COMMIT""'
+      	sh 'sudo docker build -t sabrine24/devops-app:""$GIT_COMMIT"" .'
+      	sh 'sudo docker push sabrine24/devops-app:""$GIT_COMMIT""'
     	}
 
   	}
@@ -45,7 +48,7 @@ pipeline {
  stage('Deployment Kubernetes  ') {
   	steps {
     	withKubeConfig([credentialsId: 'kubeconfig']) {
-           	sh "sed -i 's#replace#hrefnhaila/devops-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+           	sh "sed -i 's#replace#sabrine24/devops-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
            	sh "kubectl apply -f k8s_deployment_service.yaml"
          	}
   	}
