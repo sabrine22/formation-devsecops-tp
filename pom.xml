@@ -40,7 +40,29 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
            
-            <!--               	PITest Mutation Plugin               	-->
+            <!--                   Jacoco Plugin                   -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                        <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                        <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+<!--               	PITest Mutation Plugin               	-->
    			<plugin>
    		 	<groupId>org.pitest</groupId>
    		 	<artifactId>pitest-maven</artifactId>
@@ -61,3 +83,9 @@
    		 	</configuration>
    			</plugin>
 
+
+
+
+        </plugins>
+    </build>
+</project>
