@@ -36,17 +36,17 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
 		stage('SONAR SCAN  ') {
 		steps {
-				withCredentials([string(credentialsId: 'token_sonarqube', variable: 'TOKENSONAR')]) {
+			
 
 						withSonarQubeEnv('SonarQube'){
 							sh "mvn clean verify sonar:sonar \
 								-Dsonar.projectKey=tpsonarqube \
 								-Dsonar.projectName='tpsonarqube' \
 								-Dsonar.host.url=http://tp1.eastus.cloudapp.azure.com:9000 \
-								-Dsonar.token=${TOKENSONAR}"
+								-Dsonar.token=sqp_f4949e19177b525334625bc28a891e89e2539351"
 
 						}
-				}
+				
 		}
 
 	}
