@@ -1,5 +1,8 @@
 fileignoreconfig:
+- filename: .talismanrc file
+  checksum: 3b8555415039cdd30e50c88ba1d4b52db47ab20aeb24ca18a849506b3d0302c5
 - filename: file7
   checksum: c5615d9ff5687e952af72149e495a16994b2fffcf88eb2de8669ba201686db21
 version: ""
-Talisman done in 238.5507ms
+
+Talisman done in 245.2184ms
