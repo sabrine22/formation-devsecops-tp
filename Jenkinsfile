@@ -33,6 +33,25 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
    	}
  	}
 
+
+		stage('SONAR SCAN  ') {
+		steps {
+				withCredentials([string(credentialsId: 'token_sonarqube', variable: 'TOKENSONAR')]) {
+
+						withSonarQubeEnv('SonarQube'){
+							sh "mvn clean verify sonar:sonar \
+								-Dsonar.projectKey=tpsonarqube \
+								-Dsonar.projectName='tpsonarqube' \
+								-Dsonar.host.url=http://tp1.eastus.cloudapp.azure.com:9000 \
+								-Dsonar.token=${TOKENSONAR}"
+
+						}
+				}
+		}
+
+	}
+
+
  stage('Docker Build and Push') {
   	steps {
     	withCredentials([string(credentialsId: 'dockerhub', variable: 'DOCKER_HUB_PASSWORD')]) {
@@ -56,22 +75,6 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 	}
 
 
-	stage('SONAR SCAN  ') {
-		steps {
-				withCredentials([string(credentialsId: 'token_sonarqube', variable: 'TOKENSONAR')]) {
-
-						withSonarQubeEnv('SonarQube'){
-							sh "mvn clean verify sonar:sonar \
-								-Dsonar.projectKey=tpsonarqube \
-								-Dsonar.projectName='tpsonarqube' \
-								-Dsonar.host.url=http://tp1.eastus.cloudapp.azure.com:9000 \
-								-Dsonar.token=${TOKENSONAR}"
-
-						}
-				}
-		}
-
-	}
 
 
 
