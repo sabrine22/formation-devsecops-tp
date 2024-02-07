@@ -37,7 +37,7 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		stage('SONAR SCAN  ') {
 		steps {
 			
-
+			
 						withSonarQubeEnv('SonarQube'){
 							sh "mvn clean verify sonar:sonar \
 								-Dsonar.projectKey=tpsonarqube \
@@ -64,7 +64,7 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
   	}
 	}
 
- stage('Deployment Kubernetes  ') {
+ stage('Deployment Kubernetes ') {
   	steps {
     	withKubeConfig([credentialsId: 'kubeconfig']) {
            	sh "sed -i 's#replace#sabrine24/devops-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
