@@ -37,7 +37,7 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		stage('SONAR SCAN  ') {
 		steps {
 			
-			
+
 						withSonarQubeEnv('SonarQube'){
 							sh "mvn clean verify sonar:sonar \
 								-Dsonar.projectKey=tpsonarqube \
@@ -76,6 +76,18 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
 
 
+ stage('Vulnerability Scan - Docker') {
+   steps {
+    	catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+			 sh "mvn dependency-check:check"
+    	}
+   	 }
+   	 post {
+  	always {
+   			 dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+   			 }
+   	 }
+ }
 
 
 
