@@ -1,0 +1,5 @@
+fileignoreconfig:
+- filename: file7
+  checksum: c5615d9ff5687e952af72149e495a16994b2fffcf88eb2de8669ba201686db21
+version: ""
+Talisman done in 238.5507ms
