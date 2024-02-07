@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deplo yment
 metadata:
   labels:
     app: devsecopssabrine

@@ -51,6 +51,22 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
            	sh "sed -i 's#replace#sabrine24/devops-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
            	sh "kubectl apply -f k8s_deployment_service.yaml"
          	}
+			stage('Sonarqube Analysis -SAST')
+			        
+
+			steps {
+				withCredentials([string(credentialsId: 'token_sonarqube', variable: 'TOKENSONAR')]) {
+
+					withSonarQubeEnv('SonarQube'){
+						sh "mvn clean verify sonar:sonar \
+							-Dsonar.projectKey=tpsonarqube \
+							-Dsonar.projectName='tpsonarqube' \
+							-Dsonar.host.url=http://tp1.eastus.cloudapp.azure.com:9000 \
+							-Dsonar.token=${TOKENSONAR}"
+
+					}
+				}
+			}
   	}
 
 	}
