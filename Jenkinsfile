@@ -37,8 +37,8 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		stage('SONAR SCAN  ') {
 		steps {
 			
-
-						withSonarQubeEnv('SonarQube'){
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+     	withSonarQubeEnv('SonarQube') {
 							sh "mvn clean verify sonar:sonar \
 								-Dsonar.projectKey=tpsonarqube \
 								-Dsonar.projectName='tpsonarqube' \
