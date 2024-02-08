@@ -1,8 +1,10 @@
 fileignoreconfig:
 - filename: .talismanrc file
-  checksum: 3b8555415039cdd30e50c88ba1d4b52db47ab20aeb24ca18a849506b3d0302c5
+  checksum: 9dda90f6b39e396e35a0c46aa3d934bfe99cd237c5439ec9a007f9cb797367b7
+- filename: Jenkinsfile
+  checksum: 518be7bc1b08ecdb8789ef6cb4fa45d05fae343eafb226a8fd302dce2bf769b1
 - filename: file7
   checksum: c5615d9ff5687e952af72149e495a16994b2fffcf88eb2de8669ba201686db21
+- filename: tp0/zap.sh
+  checksum: eaa749ba15579107cfa634e575c0df10f0b945878b92d2ee2a59b11ce4f24a0c
 version: ""
-
-Talisman done in 245.2184ms
