@@ -107,7 +107,14 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
  	}
 
 
-	
+ stage('OWASP ZAP - DAST') {
+   	steps {
+     	withKubeConfig([credentialsId: 'kubeconfig']) {
+       	sh 'sudo bash zap.sh'
+     	}
+   	}
+ 	}
+
 
 
 
