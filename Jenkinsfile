@@ -2,13 +2,25 @@ pipeline {
   agent any
 
   stages {
-      stage('Build Artifact') {
+   
+
+
+
+
+
+
+
+
+   stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
 
               archive 'target/*.jar' //so that 
             }
         }  
+
+
+
 
  stage('Mutation Tests - PIT') {
   	steps {
@@ -21,35 +33,49 @@ pipeline {
    	}
 	}
 
- stage('Vulnerability Scan - Docker Trivy') {
-   	steps {
-        	withCredentials([string(credentialsId: 'trivy_sabrine', variable: 'TOKEN')]) {
-catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-      sh "sed -i 's#token_github#${TOKEN}#g' trivy-image-scan.sh" 	 
-      sh "sudo bash trivy-image-scan.sh"
 
-}
-       	}
-   	}
- 	}
+
+
+
+			stage('Vulnerability Scan - Docker Trivy') {
+			steps {
+				withCredentials([string(credentialsId: 'trivy_sabrine', variable: 'TOKEN')]) {
+					catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+						sh "sed -i 's#token_github#${TOKEN}#g' trivy-image-scan.sh" 	 
+						sh "sudo bash trivy-image-scan.sh"
+
+					}
+			}
+			}
+			}
+
+
+
 
 
 		stage('SONAR SCAN  ') {
-		steps {
+					steps {
 			
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-     	withSonarQubeEnv('SonarQube') {
-							sh "mvn clean verify sonar:sonar \
-								-Dsonar.projectKey=tpsonarqube \
-								-Dsonar.projectName='tpsonarqube' \
-								-Dsonar.host.url=http://tp1.eastus.cloudapp.azure.com:9000 \
-								-Dsonar.token=sqp_f4949e19177b525334625bc28a891e89e2539351"
+			                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-						}
+								withSonarQubeEnv('SonarQube') {
+									sh "mvn sonar:sonar \
+  -Dsonar.projectKey=sabrine \
+  -Dsonar.projectName=sabrine \
+  -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9999"
+
+								}
+
 				
+							}
+
+
+				}
+
 		}
 
-	}
+
+
 
 
  stage('Docker Build and Push') {
@@ -63,6 +89,8 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
   	}
 	}
+
+
 
  stage('Deployment Kubernetes ') {
   	steps {
@@ -121,6 +149,12 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
 
 
-    }
-}
+
+
+
+
+
+
+  
+	}
 }
