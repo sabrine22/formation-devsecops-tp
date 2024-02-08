@@ -123,3 +123,4 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
     }
 }
+}
